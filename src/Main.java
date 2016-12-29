@@ -1,4 +1,3 @@
-package battleField;
 
 import java.applet.*;
 import java.awt.Color;
@@ -15,8 +14,6 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-import battleField.Registry.Alignments;
-import entity.Entity;
 import particulates.explosion.Explosion;
 
 //need for music and sound

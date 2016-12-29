@@ -1,6 +1,7 @@
 
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
@@ -8,12 +9,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
-import battleField.Bullet;
-import battleField.Main;
-import battleField.Player;
-import battleField.Registry;
-
-abstract class Entity extends battleField.Main{
+abstract class Entity extends Main implements Cloneable{
 	public static ArrayList<Entity> allUnits = new ArrayList<>();
 	public static Random rand = new Random();
 	

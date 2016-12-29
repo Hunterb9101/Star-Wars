@@ -1,4 +1,3 @@
-package battleField;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -6,8 +5,6 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import entity.Entity;
-import entity.Rifleman;
 import particulates.explosion.Explosion;
 import particulates.explosion.Firework3D;
 import particulates.particleCommons.ColorRange;

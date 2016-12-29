@@ -1,12 +1,8 @@
-package battleField;
 
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
-
-import bitBattles.Entity;
-
 
 public class Bullet {
 	static ArrayList<Bullet> allBullets = new ArrayList<Bullet>();
