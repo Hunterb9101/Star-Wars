@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Point;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -13,78 +14,101 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import particulates.explosion.Explosion;
+
 //need for music and sound
 
-public class Main extends ConstructorClass {
+public class Main extends ConstructorClass {	
+	public static Random rand = new Random();
+	public static Player player1 = new Player();
+	public static Player player2 = new Player();
 	
-	public Random rand = new Random();
-	// ********Global Variables
-	int defaultWidth = 600;
-	int defaultHeight = 600;
-	Entity rifleman;
-	Entity rifleman2;
+	public static boolean roundFinished = false;
+	public static int teamWon = -1;
+	
+	public static boolean disableControls = false;
+	public static int defaultWidth = 800;
+	public static int defaultHeight = 800;
+	
+	public static int leftPlayerSpawn = 150;
+	public static int rightPlayerSpawn = 650;
+	
+	public static int bottomBorder = 650;
+	public static int topBorder = 150;
 
 	public void doInitialization(int width, int height) {
-		this.setSize(600,600);
-		
-		
-		for(int i = 0; i<4; i++){
-			for(int i1 = 0; i1<20; i1++){
-				rifleman = new Rifleman(0);
-				rifleman.spawn(i*26 + 28, i1*25+28);
-			}
-		}
-
-		for(int i = 0; i<4; i++){
-			for(int i1 = 0; i1<20; i1++){
-				rifleman = new Rifleman(1);
-				rifleman.spawn(540-i*26 + 28, i1*25+28);
-				rifleman.state = Entity.entityState.WALK;
-			}
-		}
-		
-		/*
-		rifleman = new Rifleman(0);
-		rifleman.spawn(40, 40);
-		rifleman = new Rifleman(1);
-		rifleman.spawn(80, 40);
-		*/
+		this.setSize(defaultWidth,defaultHeight);
+		player2.team = 1;
+		player2.color = Color.RED;
+		Registry.registerFireworks();
 	} // doInitialization
 
 	// All drawing is done here //
 	synchronized public void drawFrame(Graphics g, int width, int height) {
-		this.setSize(600,600);
-		g.setColor(Color.WHITE);
-		g.fillRect(0, 0, width, height);
-	
-
-		Entity.drawAllUnits(g);
-		Bullet.updateBullets(g);
+		this.setSize(defaultWidth,defaultHeight);
+		g.setColor(Color.GRAY);
+		g.fillRect(0, 0, defaultWidth, defaultHeight);
 		
-		for(int i = 0; i<Entity.allUnits.toArray().length; i++){
-			if(Entity.allUnits.get(i).enemyFound()){
-				Entity.allUnits.get(i).attack();
+		g.setColor(player1.color);
+		g.fillRect(0, 0, leftPlayerSpawn, defaultHeight);
+		
+		g.setColor(player2.color);
+		g.fillRect(rightPlayerSpawn, 0, defaultHeight-rightPlayerSpawn, defaultHeight);
+		
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, defaultWidth, topBorder);
+		g.fillRect(0, bottomBorder, defaultWidth, defaultHeight-bottomBorder);
+		
+		if(!roundFinished){
+			Entity.updateUnits(g);
+			Bullet.updateBullets(g);
+		}	
+		else{
+			Entity.allUnits.clear();
+			Bullet.allBullets.clear();
+			
+			Explosion.drawAll(g);
+			
+			if(rand.nextDouble() < .05 && teamWon == 0){
+				Registry.firework1.initParticles(new Point(rand.nextInt(defaultWidth),rand.nextInt(defaultHeight)));
+				Registry.registerFireworks();
 			}
-			else{
-				if(Entity.allUnits.get(i).team == 0){
-					Entity.allUnits.get(i).x+=Entity.allUnits.get(i).speed;
-				}
-				else{
-					Entity.allUnits.get(i).x-=Entity.allUnits.get(i).speed;
-				}
-				Entity.allUnits.get(i).setState(Entity.entityState.WALK);
+			else if(rand.nextDouble() < .05 && teamWon == 1){
+				Registry.firework2.initParticles(new Point(rand.nextInt(defaultWidth),rand.nextInt(defaultHeight)));
+				Registry.registerFireworks();
 			}
-		}		
+		}
+		
+		g.setColor(Color.BLACK);
+		Player.checkForWin(g);
+		
+		g.setColor(player1.color);
+		Registry.drawText(g, player1.name, Registry.Alignments.LEFT, 5,25);
+		Registry.drawText(g, "Energy: " +String.valueOf(player1.currEnergy) + "/" + String.valueOf(player1.energy), Registry.Alignments.LEFT,5, 50);
+		Registry.drawText(g, "Health: " + String.valueOf(player1.currHealth) + "/" + String.valueOf(player1.health), Registry.Alignments.LEFT,5, 75);
+		
+		g.setColor(player2.color);
+		Registry.drawText(g, player2.name, Registry.Alignments.RIGHT, defaultWidth - 5,25);
+		Registry.drawText(g, "Energy: " + String.valueOf(player2.currEnergy) + "/" + String.valueOf(player2.energy), Registry.Alignments.RIGHT,defaultWidth - 5, 50);
+		Registry.drawText(g, "Health: " + String.valueOf(player2.currHealth) + "/" + String.valueOf(player2.health), Registry.Alignments.RIGHT,defaultWidth - 5, 75);	
 	
+		
+		if(!roundFinished){
+			player1.regenEnergy();
+			player2.regenEnergy();
+			
+			player2.autoSpawn();
+		}
 	}
 
 	public void mousePressed(MouseEvent evt) {
 		super.mousePressed(evt);
 		
-		// Spawn 4 Rifleman
-		int radius = 45;
-		for(int i = 0; i<4; i++){
-			(new Rifleman(0)).spawn(((rand.nextBoolean())? 1:-1) * rand.nextInt(radius) + evt.getX(), ((rand.nextBoolean())? 1:-1) * rand.nextInt(radius) + evt.getY());
+		if(!roundFinished){
+			Entity.spawnCluster("Rifleman", evt.getX(), evt.getY(), 45, 5, player1);
+		}
+		else{
+			// Go to main window //
 		}
 	}
 
@@ -92,40 +116,6 @@ public class Main extends ConstructorClass {
 	}
 
 	public void keyReleased(KeyEvent evt){
-	}
-	
-	
-	public static BufferedImage toBufferedImage(Image img){
-	    if (img instanceof BufferedImage) {
-	        return (BufferedImage) img;
-	    }
-
-	    // Create a buffered image with transparency
-	    BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-
-	    // Draw the image on to the buffered image
-	    Graphics2D bGr = bimage.createGraphics();
-	    bGr.drawImage(img, 0, 0, null);
-	    bGr.dispose();
-
-	    // Return the buffered image
-	    return bimage;
-	}
-	
-	
-	public static BufferedImage colorify(BufferedImage img){
-		for(int y = 0; y < img.getHeight(null); y++)
-		    for(int x = 0; x < img.getWidth(null); x++)
-		    {
-		        Color imageColor = new Color(img.getRGB(x, y));
-		        //mix imageColor and desired color 
-		        if(img.getRGB(x, y) != 0){
-		        	if(img.getRGB(x,y) == -3932160){
-		        		img.setRGB(x, y, new Color(0,0,196).getRGB());
-		        	}
-		        }
-		    }
-		return img;
 	}
 }
 
