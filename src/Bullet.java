@@ -7,10 +7,14 @@ import java.util.ArrayList;
 public class Bullet {
 	static ArrayList<Bullet> allBullets = new ArrayList<Bullet>();
 	public int velocity = 5;
+	public Color bulletColor = Color.BLACK;
+	
 	public Entity parent;
 	double x;
 	double y;
+	
 	boolean dieOnNext = false;
+	
 	public Bullet(Entity parent){
 		if(parent.team == 1){
 			velocity *= -1;
@@ -24,23 +28,29 @@ public class Bullet {
 	public static void updateBullets(Graphics g){
 		for(int i = 0; i<allBullets.size(); i++){
 			allBullets.get(i).x += allBullets.get(i).velocity;
-			g.setColor(Color.RED);
-			for(int j = 0; j<Entity.allUnits.size(); j++){
-				if(Entity.allUnits.get(j).contains((int)allBullets.get(i).x,(int)allBullets.get(i).y) && Entity.allUnits.get(j).team != allBullets.get(i).parent.team){
-					Entity.allUnits.get(j).hitPoints -= allBullets.get(i).parent.attack;
-					if(Entity.allUnits.get(j).hitPoints < 0){
-						Entity.allUnits.remove(j);
+			
+			try{
+				for(int j = 0; j<Entity.allUnits.size(); j++){
+					if(Entity.allUnits.get(j).isTouching((int)allBullets.get(i).x,(int)allBullets.get(i).y) && Entity.allUnits.get(j).team != allBullets.get(i).parent.team){
+						Entity.allUnits.get(j).onHit(allBullets.get(i),j);
+						allBullets.get(i).onHit(i);
+						if(i == 0){
+							
+						}
+						else{
+							i--;
+						}
 					}
-					
-					allBullets.get(i).dieOnNext = true;
+					else{
+						g.setColor(allBullets.get(i).bulletColor);
+						g.fillRect((int)allBullets.get(i).x, (int)allBullets.get(i).y, 8, 1);
+					}
 				}
-			}
-			g.fillRect((int)allBullets.get(i).x, (int)allBullets.get(i).y, 8, 1);			
+			}catch(IndexOutOfBoundsException e){}			
 		}
-		for(int i = 0; i<allBullets.size(); i++){
-			if(allBullets.get(i).dieOnNext){
-				allBullets.remove(i);
-			}
-		}
+	}
+	
+	public void onHit(int idx){
+		allBullets.remove(idx);
 	}
 }
