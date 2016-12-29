@@ -1,5 +1,8 @@
+package battleField;
 import java.awt.Color;
 import java.awt.Graphics;
+
+import entity.Entity;
 
 public class Player {
 	public String name = "Defacto";

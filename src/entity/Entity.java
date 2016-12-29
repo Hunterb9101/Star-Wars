@@ -1,3 +1,4 @@
+package entity;
 
 
 import java.awt.Graphics;
@@ -9,7 +10,12 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
-abstract class Entity extends Main implements Cloneable{
+import battleField.Bullet;
+import battleField.Main;
+import battleField.Player;
+import battleField.Registry;
+
+public abstract class Entity extends Main implements Cloneable{
 	public static ArrayList<Entity> allUnits = new ArrayList<>();
 	public static Random rand = new Random();
 	

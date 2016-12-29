@@ -1,4 +1,4 @@
-package particulates.particleCommons;
+package fireworks.particleCommons;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -6,8 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-import particulates.explosion.Explosion;
-import particulates.explosion.Firework3D;
+import fireworks.explosion.Explosion;
 
 public class Particle {
 	Random rand = new Random();

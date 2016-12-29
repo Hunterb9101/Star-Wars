@@ -1,4 +1,4 @@
-package particulates.explosion;
+package fireworks.explosion;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -7,7 +7,8 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
 
-import particulates.particleCommons.*;
+import fireworks.particleCommons.ColorRange;
+import fireworks.particleCommons.Particle;
 
 public class Explosion {
 	public static ArrayList<Explosion> allExplosions = new ArrayList<>();

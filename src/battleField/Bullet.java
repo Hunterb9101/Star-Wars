@@ -1,8 +1,11 @@
+package battleField;
 
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
+
+import entity.Entity;
 
 public class Bullet {
 	static ArrayList<Bullet> allBullets = new ArrayList<Bullet>();
