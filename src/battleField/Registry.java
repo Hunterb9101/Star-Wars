@@ -1,14 +1,19 @@
+package battleField;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
-import particulates.explosion.Explosion;
-import particulates.explosion.Firework3D;
-import particulates.particleCommons.ColorRange;
-import particulates.particleCommons.Effect;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+
+import entity.*;
+import fireworks.explosion.*;
+import fireworks.particleCommons.*;
 
 public class Registry {
 	enum Alignments{LEFT,CENTER,RIGHT};
@@ -17,8 +22,26 @@ public class Registry {
 	public static Entity getNewEntity(String entityName){
 		switch(entityName){
 		case "Rifleman": return new Rifleman();
+		case "StormTrooper": return new StormTrooper();
 		default: return new Rifleman();
 		}
+	}
+	
+	public static Image loadImage(String path) {
+		System.out.println("Loaded resource: " + path);
+		Image img = null;
+		try {
+			if(path.substring(path.indexOf(".")).equals(".gif")){
+				System.out.println("Found animation: " + path);
+				img = new ImageIcon(path).getImage();
+			}
+			else{
+				img = ImageIO.read(new File(path));
+			}
+		} catch (IOException|NullPointerException e) {
+			System.out.println("Failed to load resource at: " + path);
+		} 
+		return img;
 	}
 	
 	public static void registerFireworks(){
@@ -36,7 +59,7 @@ public class Registry {
 		firework1 = new Firework3D(180,100,ColorRange.rainbow,myEffects);
 		firework1.particleSize = 5;
 		firework1.velocity = 6;
-		firework1.particleShape = Explosion.shapes.FILLEDCIRCLE;
+		firework1.particleShape = fireworks.explosion.Explosion.shapes.FILLEDCIRCLE;
 		
 		
 		ArrayList<Effect> myEffects2 = new ArrayList<Effect>();
@@ -53,7 +76,7 @@ public class Registry {
 		firework2 = new Firework3D(180,100,ColorRange.rainbow,myEffects2);
 		firework2.particleSize = 5;
 		firework2.velocity = 6;
-		firework2.particleShape = Explosion.shapes.FILLEDCIRCLE;
+		firework2.particleShape = fireworks.explosion.Explosion.shapes.FILLEDCIRCLE;
 	}
 	
 	public static void drawText(Graphics g, String value, Alignments align, int x, int y){

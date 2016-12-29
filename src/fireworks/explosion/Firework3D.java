@@ -1,13 +1,14 @@
-package particulates.explosion;
+package fireworks.explosion;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
 
-import particulates.particleCommons.ColorRange;
-import particulates.particleCommons.Effect;
-import particulates.particleCommons.Particle;
+import fireworks.particleCommons.ColorRange;
+import fireworks.particleCommons.Effect;
+import fireworks.particleCommons.Particle;
+
 
 public class Firework3D extends Explosion {
 	public Particle.Shapes3D fireworkShape = Particle.Shapes3D.SPHERE;

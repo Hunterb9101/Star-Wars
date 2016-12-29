@@ -1,3 +1,4 @@
+package entity;
 
 
 import java.awt.Image;
@@ -6,7 +7,7 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
-public class Rifleman extends Entity{
+public class Rifleman extends entity.Entity{
 	private Image img  = new ImageIcon("redcoat/RedcoatIdle.gif").getImage();
 	private Image img2 = new ImageIcon("redcoat/RedcoatWalk.gif").getImage();
 	private Image img3 = new ImageIcon("redcoat/RedcoatPrep.gif").getImage();
