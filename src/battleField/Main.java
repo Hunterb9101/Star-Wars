@@ -42,6 +42,7 @@ public class Main extends ConstructorClass {
 		this.setSize(defaultWidth,defaultHeight);
 		player2.team = 1;
 		player2.color = Color.RED;
+		player1.color = Color.BLUE;
 		Registry.registerFireworks();
 	} // doInitialization
 
