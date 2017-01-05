@@ -1,6 +1,9 @@
 package entity;
 
 import java.awt.Image;
+import java.awt.image.BufferedImage;
+
+import battleField.Registry;
 
 public class Animation {
 	public Image[] frames;
@@ -21,7 +24,7 @@ public class Animation {
 		startFrameTime = System.currentTimeMillis();
 	}
 	
-	public Image play(int time){
+	public BufferedImage play(int time){
 		currTime = System.currentTimeMillis();
 		
 		if(!isPlaying){
@@ -40,6 +43,6 @@ public class Animation {
 			isPlaying = false; // Remember to restart on the next run
 		}
 		
-		return frames[currFrame];
+		return Registry.toBufferedImage(frames[currFrame]);
 	}
 }

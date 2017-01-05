@@ -54,17 +54,17 @@ public abstract class Entity extends Main implements Cloneable{
 	public entityState state = entityState.WALK;
 	public entityState prevState = entityState.IDLE;
 	
-	Image idleImg; // When the unit is idle
-	Image walkImg; // When the unit is moving
-	Image prepImg; // When the unit is preparing to fire
-	Image fireImg; // When the unit is firing
-	Image reloadImg; // When unit is in between rounds
+	Animation idleImg; // When the unit is idle
+	Animation walkImg; // When the unit is moving
+	Animation prepImg; // When the unit is preparing to fire
+	Animation fireImg; // When the unit is firing
+	Animation reloadImg; // When unit is in between rounds
 	
 	public Entity(String iName){
 		name = iName;		
 	}
 	
-	public void setImgSources(Image idle, Image walk, Image prep, Image fire, Image reload){
+	public void setImgSources(Animation idle, Animation walk, Animation prep, Animation fire, Animation reload){
 		idleImg = idle;
 		walkImg = walk;
 		prepImg = prep;
@@ -124,7 +124,7 @@ public abstract class Entity extends Main implements Cloneable{
 			}
 			
 			if(passed){
-				Registry.getNewEntity("entityName").spawn(checkX, checkY, p);
+				Registry.getNewEntity(entityName).spawn(checkX, checkY, p);
 				spawned++;
 			}
 		}
@@ -140,7 +140,7 @@ public abstract class Entity extends Main implements Cloneable{
 	
 	public static void updateUnits(Graphics g){
 		AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
-		tx.translate(-30, 0);		
+		tx.translate(-35, 0);		
 		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
 			
 		int offset = 0;
@@ -152,7 +152,7 @@ public abstract class Entity extends Main implements Cloneable{
 			offset = 0;
 			switch(allUnits.get(i).state){
 				case IDLE:
-					image = Registry.toBufferedImage(allUnits.get(i).idleImg);
+					image = allUnits.get(i).idleImg.play(100);
 					offset = 7;
 					if(!allUnits.get(i).allyFound(i)){
 						allUnits.get(i).setState(entityState.WALK);
@@ -160,10 +160,9 @@ public abstract class Entity extends Main implements Cloneable{
 					break;
 					
 				case WALK:
-					image = Registry.toBufferedImage(allUnits.get(i).walkImg);
+					image = allUnits.get(i).walkImg.play(750);
 					
 					if(allUnits.get(i).enemyFound()){
-						allUnits.get(i).prepImg.flush();
 						allUnits.get(i).setState(entityState.PREP);
 					}
 					else if(allUnits.get(i).allyFound(i)){
@@ -183,17 +182,16 @@ public abstract class Entity extends Main implements Cloneable{
 					break;
 					
 				case PREP:
-					image = Registry.toBufferedImage(allUnits.get(i).prepImg);
+					image = allUnits.get(i).prepImg.play(allUnits.get(i).prepTime);
 					offset = 7;
 					
 					if(currTime >= allUnits.get(i).startStateTime + allUnits.get(i).prepTime){
-						allUnits.get(i).fireImg.flush();
 						allUnits.get(i).setState(entityState.FIRE);
 					}
 					break;
 					
 				case FIRE:
-					image = Registry.toBufferedImage(allUnits.get(i).fireImg);
+					image = allUnits.get(i).fireImg.play(allUnits.get(i).attackTime);
 					offset = 7;
 					
 					if(!allUnits.get(i).hasFired){
@@ -212,12 +210,11 @@ public abstract class Entity extends Main implements Cloneable{
 					break;
 					
 				case RELOAD:
-					image = Registry.toBufferedImage(allUnits.get(i).reloadImg);
+					image = allUnits.get(i).reloadImg.play(allUnits.get(i).reloadTime);
 					offset = 7;
 					
 					if(currTime > allUnits.get(i).startStateTime + allUnits.get(i).reloadTime){
 						allUnits.get(i).hasFired = false;
-						allUnits.get(i).fireImg.flush();
 						allUnits.get(i).setState(entityState.FIRE);
 					}
 					break;
@@ -245,10 +242,10 @@ public abstract class Entity extends Main implements Cloneable{
 	public boolean enemyFound(){
 		for(int i = 0; i<allUnits.size(); i++){
 			if(this.team != allUnits.get(i).team){
-				if(allUnits.get(i).x - this.x > -this.range && allUnits.get(i).x - this.x < 0 && Math.abs(allUnits.get(i).y - this.y)<10  && team == 1){
+				if(allUnits.get(i).x - this.x > -this.range && allUnits.get(i).x - this.x < 0 && Math.abs(allUnits.get(i).y - this.y)<25  && team == 1){
 					return true;
 				}
-				else if(allUnits.get(i).x - this.x < this.range && allUnits.get(i).x - this.x > 0 && Math.abs(allUnits.get(i).y - this.y)<10 && team == 0){
+				else if(allUnits.get(i).x - this.x < this.range && allUnits.get(i).x - this.x > 0 && Math.abs(allUnits.get(i).y - this.y)<25 && team == 0){
 					return true;
 				}
 			}
@@ -259,10 +256,10 @@ public abstract class Entity extends Main implements Cloneable{
 	public boolean allyFound(int idx){
 		for(int i = 0; i<allUnits.size(); i++){
 			if(this.team == allUnits.get(i).team){
-				if(allUnits.get(i).x - this.x > -8 && allUnits.get(i).x - this.x < 0 && Math.abs(allUnits.get(i).y - this.y)<5 && idx != i && team == 1){
+				if(allUnits.get(i).x - this.x > -16 && allUnits.get(i).x - this.x < 0 && Math.abs(allUnits.get(i).y - this.y)<10 && idx != i && team == 1){
 					return true;
 				}
-				else if(allUnits.get(i).x - this.x < 8 && allUnits.get(i).x - this.x > 0 && Math.abs(allUnits.get(i).y - this.y)<5 && idx != i && team == 0){
+				else if(allUnits.get(i).x - this.x < 16 && allUnits.get(i).x - this.x > 0 && Math.abs(allUnits.get(i).y - this.y)<10 && idx != i && team == 0){
 					return true;
 				}
 			}
