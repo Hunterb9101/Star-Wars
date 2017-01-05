@@ -22,13 +22,13 @@ public class Player {
 		if(Main.player1.currHealth <= 0){
 			Main.roundFinished = true;
 			Main.teamWon = 1;
-			Registry.drawText(g,"Player 2/" + Main.player2.name + " wins!", Registry.Alignments.CENTER,300, 300);
+			Registry.drawText(g,"Player 2/" + Main.player2.name + " wins!", Registry.Alignments.CENTER,Main.defaultWidth/2, Main.defaultHeight/2);
 			
 		}
 		else if(Main.player2.currHealth <= 0){
 			Main.roundFinished = true;
 			Main.teamWon = 0;
-			Registry.drawText(g,"Player 1/" + Main.player1.name + " wins!", Registry.Alignments.CENTER,300, 300);
+			Registry.drawText(g,"Player 1/" + Main.player1.name + " wins!", Registry.Alignments.CENTER,Main.defaultWidth/2, Main.defaultHeight/2);
 		}
 	}
 	

@@ -22,13 +22,12 @@ public class Registry {
 	public static Entity getNewEntity(String entityName){
 		switch(entityName){
 		case "Rifleman": return new Rifleman();
-		case "StormTrooper": return new StormTrooper();
-		default: return new Rifleman();
+		case "Stormtrooper": return new Stormtrooper();
+		default: System.out.println("Oh No! Entity not found:" + entityName + "!");return new Rifleman();
 		}
 	}
 	
 	public static Image loadImage(String path) {
-		System.out.println("Loaded resource: " + path);
 		Image img = null;
 		try {
 			if(path.substring(path.indexOf(".")).equals(".gif")){
