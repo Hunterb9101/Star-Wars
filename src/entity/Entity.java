@@ -19,6 +19,9 @@ public abstract class Entity extends Main implements Cloneable{
 	public static ArrayList<Entity> allUnits = new ArrayList<>();
 	public static Random rand = new Random();
 	
+	public int imgWidth;
+	public int imgHeight;
+	
 	public String name; // Name of unit //
 	public int team; // Number of team //
 	
@@ -60,12 +63,18 @@ public abstract class Entity extends Main implements Cloneable{
 	Animation fireImg; // When the unit is firing
 	Animation reloadImg; // When unit is in between rounds
 	
+	Addon[] appliedAddons = new Addon[0];
+	
 	public Entity(String iName){
 		name = iName;		
 	}
 	
 	public void setImgSources(Animation idle, Animation walk, Animation prep, Animation fire, Animation reload){
 		idleImg = idle;
+		
+		imgWidth = idle.frames[0].getWidth(null);
+		imgHeight = idle.frames[0].getHeight(null);
+		
 		walkImg = walk;
 		prepImg = prep;
 		fireImg = fire;
@@ -138,22 +147,24 @@ public abstract class Entity extends Main implements Cloneable{
 		}
 	}
 	
-	public static void updateUnits(Graphics g){
-		AffineTransform tx = AffineTransform.getScaleInstance(-1, 1);
-		tx.translate(-35, 0);		
-		AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
-			
+	public static void updateUnits(Graphics g){		
+		AffineTransform tx;	
+		AffineTransformOp op;
 		int offset = 0;
 		BufferedImage image;
 		
 		currTime = System.currentTimeMillis();
 		
-		for(int i = 0; i<allUnits.toArray().length; i++){
+		for(int i = 0; i<allUnits.size(); i++){
+			tx = AffineTransform.getScaleInstance(-1, 1);
+			tx.translate(-allUnits.get(i).imgWidth, 0);		
+			op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+			
 			offset = 0;
 			switch(allUnits.get(i).state){
 				case IDLE:
 					image = allUnits.get(i).idleImg.play(100);
-					offset = 7;
+					offset = allUnits.get(i).idleImg.offsets[allUnits.get(i).idleImg.currFrame];
 					if(!allUnits.get(i).allyFound(i)){
 						allUnits.get(i).setState(entityState.WALK);
 					}
@@ -161,7 +172,7 @@ public abstract class Entity extends Main implements Cloneable{
 					
 				case WALK:
 					image = allUnits.get(i).walkImg.play(750);
-					
+					offset = allUnits.get(i).walkImg.offsets[allUnits.get(i).walkImg.currFrame];
 					if(allUnits.get(i).enemyFound()){
 						allUnits.get(i).setState(entityState.PREP);
 					}
@@ -183,7 +194,7 @@ public abstract class Entity extends Main implements Cloneable{
 					
 				case PREP:
 					image = allUnits.get(i).prepImg.play(allUnits.get(i).prepTime);
-					offset = 7;
+					offset = allUnits.get(i).prepImg.offsets[allUnits.get(i).prepImg.currFrame];
 					
 					if(currTime >= allUnits.get(i).startStateTime + allUnits.get(i).prepTime){
 						allUnits.get(i).setState(entityState.FIRE);
@@ -192,7 +203,7 @@ public abstract class Entity extends Main implements Cloneable{
 					
 				case FIRE:
 					image = allUnits.get(i).fireImg.play(allUnits.get(i).attackTime);
-					offset = 7;
+					offset = allUnits.get(i).fireImg.offsets[allUnits.get(i).fireImg.currFrame];
 					
 					if(!allUnits.get(i).hasFired){
 						allUnits.get(i).hasFired = true;
@@ -211,7 +222,7 @@ public abstract class Entity extends Main implements Cloneable{
 					
 				case RELOAD:
 					image = allUnits.get(i).reloadImg.play(allUnits.get(i).reloadTime);
-					offset = 7;
+					offset = allUnits.get(i).reloadImg.offsets[allUnits.get(i).reloadImg.currFrame];
 					
 					if(currTime > allUnits.get(i).startStateTime + allUnits.get(i).reloadTime){
 						allUnits.get(i).hasFired = false;
@@ -228,7 +239,21 @@ public abstract class Entity extends Main implements Cloneable{
 				image = op.filter(image, null);
 				offset*=-1;			
 			}
+			int addonOrientation;
 			g.drawImage(image,(int)allUnits.get(i).x+offset,(int)allUnits.get(i).y,allUnits.get(i).width,allUnits.get(i).height,null);
+			for(int a = 0; a<allUnits.get(i).appliedAddons.length; a++){
+				if(allUnits.get(i).team == 1){
+					image = op.filter(allUnits.get(i).appliedAddons[a].src, null);
+					offset = Addon.teamSwitch;
+					addonOrientation = -1;			
+				}
+				else{
+					addonOrientation = 1;
+					offset = 0;
+					image = allUnits.get(i).appliedAddons[a].src;
+				}
+				g.drawImage(image,(int)allUnits.get(i).x+ allUnits.get(i).appliedAddons[a].x * addonOrientation  + offset, allUnits.get(i).appliedAddons[a].y + (int)allUnits.get(i).y,null);
+			}
 			
 		}
 	}

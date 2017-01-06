@@ -44,6 +44,7 @@ public class Main extends ConstructorClass {
 		player2.color = Color.RED;
 		player1.color = Color.BLUE;
 		Registry.registerFireworks();
+		Registry.registerAddons();
 	} // doInitialization
 
 	// All drawing is done here //

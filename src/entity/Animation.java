@@ -7,6 +7,7 @@ import battleField.Registry;
 
 public class Animation {
 	public Image[] frames;
+	public int[] offsets;
 	public int currFrame = 0;
 	
 	public long startFrameTime = System.currentTimeMillis();
@@ -15,8 +16,9 @@ public class Animation {
 	
 	public boolean isPlaying = false;
 	
-	public Animation(Image[] frames){
+	public Animation(Image[] frames, int[] offsets){
 		this.frames = frames;
+		this.offsets = offsets;
 	}
 	
 	public void restart(){

@@ -19,6 +19,7 @@ public class Registry {
 	enum Alignments{LEFT,CENTER,RIGHT};
 	public static Firework3D firework1;
 	public static Firework3D firework2;
+	
 	public static Entity getNewEntity(String entityName){
 		switch(entityName){
 		case "Rifleman": return new Rifleman();
@@ -42,7 +43,11 @@ public class Registry {
 		} 
 		return img;
 	}
-	
+	public static void registerAddons(){
+		new Addon("Pauldron_Red",loadImage("stormtrooper/addons/Pauldron_Red.png"),1,14);
+		new Addon("Pauldron_Blue",loadImage("stormtrooper/addons/Pauldron_Blue.png"),1,14);
+		new Addon("Backpack",loadImage("stormtrooper/addons/Backpack.png"),-4,12);
+	}
 	public static void registerFireworks(){
 		ArrayList<Effect> myEffects = new ArrayList<Effect>();
 		myEffects.add(new Effect("velocityDecay",0,-1));
