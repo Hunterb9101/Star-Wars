@@ -43,6 +43,7 @@ public class Main extends ConstructorClass {
 		player2.team = 1;
 		player2.color = Color.RED;
 		Registry.registerFireworks();
+		Registry.registerAddons();
 	} // doInitialization
 
 	// All drawing is done here //
