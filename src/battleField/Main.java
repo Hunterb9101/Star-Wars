@@ -41,7 +41,7 @@ public class Main extends ConstructorClass {
 	public void doInitialization(int width, int height) {
 		this.setSize(defaultWidth,defaultHeight);
 		player2.team = 1;
-		player2.color = Color.RED;
+		player2.color = Color.CYAN;
 		Registry.registerFireworks();
 		Registry.registerAddons();
 	} // doInitialization
@@ -108,7 +108,7 @@ public class Main extends ConstructorClass {
 		super.mousePressed(evt);
 		
 		if(!roundFinished){
-			Entity.spawnCluster("Stormtrooper", evt.getX(), evt.getY(), 125, 5, player1);
+			Entity.spawnCluster("Rifleman", evt.getX(), evt.getY(), 125, 5, player1);
 		}
 		else{
 			// Go to main window //
