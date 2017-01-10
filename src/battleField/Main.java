@@ -45,6 +45,9 @@ public class Main extends ConstructorClass {
 		player1.color = Color.BLUE;
 		player2.color = Color.RED;
 		
+		player1.allowedUnits.add(Registry.getNewEntity("Stormtrooper"));
+		player1.allowedUnits.add(Registry.getNewEntity("Rebel"));
+		
 		Registry.registerFireworks();
 		Registry.registerAddons();
 	} // doInitialization
@@ -100,6 +103,12 @@ public class Main extends ConstructorClass {
 	
 		
 		if(!roundFinished){
+			for(int i = 0; i<player1.allowedUnits.size(); i++){
+				g.setColor(Color.red);
+				g.fillRect(defaultWidth/10*i + defaultWidth/20,737, 50, 50);
+				g.drawImage(player1.allowedUnits.get(i).idleImg.play(100),defaultWidth/10*i + defaultWidth/20,737, 50, 50, null);
+			}
+			
 			player1.regenEnergy();
 			player2.regenEnergy();
 			
