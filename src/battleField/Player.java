@@ -43,7 +43,7 @@ public class Player {
 	
 	public void autoSpawn(){
 		if(Main.rand.nextDouble() < .125){
-			Entity.spawnCluster("Stormtrooper", Main.rand.nextInt(Main.defaultWidth - Main.rightPlayerSpawn) + Main.rightPlayerSpawn, Main.rand.nextInt(Main.defaultHeight), 45, 5, this);
+			Entity.spawnCluster("Rebel", Main.rand.nextInt(Main.defaultWidth - Main.rightPlayerSpawn) + Main.rightPlayerSpawn, Main.rand.nextInt(Main.defaultHeight), 45, 5, this);
 		}
 	}
 }
