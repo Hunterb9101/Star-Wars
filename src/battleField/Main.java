@@ -35,13 +35,16 @@ public class Main extends ConstructorClass {
 	public static int leftPlayerSpawn = 150;
 	public static int rightPlayerSpawn = 650;
 	
-	public static int bottomBorder = 800;
-	public static int topBorder = 150;
+	public static int bottomBorder = 725;
+	public static int topBorder = 110;
 
 	public void doInitialization(int width, int height) {
 		this.setSize(defaultWidth,defaultHeight);
 		player2.team = 1;
-		player2.color = Color.CYAN;
+		
+		player1.color = Color.BLUE;
+		player2.color = Color.RED;
+		
 		Registry.registerFireworks();
 		Registry.registerAddons();
 	} // doInitialization
@@ -108,7 +111,7 @@ public class Main extends ConstructorClass {
 		super.mousePressed(evt);
 		
 		if(!roundFinished){
-			Entity.spawnCluster("Rifleman", evt.getX(), evt.getY(), 125, 5, player1);
+			Entity.spawnCluster("Stormtrooper", evt.getX(), evt.getY(), 75, 5, player1);
 		}
 		else{
 			// Go to main window //

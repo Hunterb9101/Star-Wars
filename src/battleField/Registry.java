@@ -24,6 +24,7 @@ public class Registry {
 		switch(entityName){
 		case "Rifleman": return new Rifleman();
 		case "Stormtrooper": return new Stormtrooper();
+		case "Rebel": return new Rebel();
 		default: System.out.println("Oh No! Entity not found:" + entityName + "!");return new Rifleman();
 		}
 	}
@@ -44,9 +45,13 @@ public class Registry {
 		return img;
 	}
 	public static void registerAddons(){
-		new Addon("Pauldron_Red",loadImage("stormtrooper/addons/Pauldron_Red.png"),1,14);
-		new Addon("Pauldron_Blue",loadImage("stormtrooper/addons/Pauldron_Blue.png"),1,14);
-		new Addon("Backpack",loadImage("stormtrooper/addons/Backpack.png"),-4,12);
+		new Addon("Pauldron_Red",loadImage("stormtrooper/addons/Pauldron_Red.png"),1,14,false);
+		new Addon("Pauldron_Blue",loadImage("stormtrooper/addons/Pauldron_Blue.png"),1,14,false);
+		new Addon("Backpack",loadImage("stormtrooper/addons/Backpack.png"),-4,12,false);
+		
+		new Addon("Head1",loadImage("rebel/addons/Rebel_Head1.png"),7,4,true);
+		new Addon("Head2",loadImage("rebel/addons/Rebel_Head2.png"),7,4,true);
+		new Addon("HelmetRebel",loadImage("rebel/addons/Rebel_Helmet.png"),3,0,true);
 	}
 	public static void registerFireworks(){
 		ArrayList<Effect> myEffects = new ArrayList<Effect>();

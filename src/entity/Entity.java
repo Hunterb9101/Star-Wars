@@ -57,7 +57,7 @@ public abstract class Entity extends Main implements Cloneable{
 	public entityState state = entityState.WALK;
 	public entityState prevState = entityState.IDLE;
 	
-	public Animation idleImg; // When the unit is idle
+	Animation idleImg; // When the unit is idle
 	Animation walkImg; // When the unit is moving
 	Animation prepImg; // When the unit is preparing to fire
 	Animation fireImg; // When the unit is firing
@@ -241,18 +241,37 @@ public abstract class Entity extends Main implements Cloneable{
 			}
 			int addonOrientation;
 			g.drawImage(image,(int)allUnits.get(i).x+offset,(int)allUnits.get(i).y,allUnits.get(i).width,allUnits.get(i).height,null);
+			
 			for(int a = 0; a<allUnits.get(i).appliedAddons.length; a++){
-				if(allUnits.get(i).team == 1){
-					image = op.filter(allUnits.get(i).appliedAddons[a].src, null);
-					offset = Addon.teamSwitch;
-					addonOrientation = -1;			
+				if(allUnits.get(i).appliedAddons[a].isScaled){
+					if(allUnits.get(i).team == 1){
+						tx = AffineTransform.getScaleInstance(-1, 1);
+						tx.translate(-allUnits.get(i).appliedAddons[a].src.getWidth(), 0);		
+						op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+						
+						image = op.filter(allUnits.get(i).appliedAddons[a].src, null);
+						offset = allUnits.get(i).width - (allUnits.get(i).appliedAddons[a].x) - (int)((double)allUnits.get(i).width/allUnits.get(i).imgWidth*allUnits.get(i).appliedAddons[a].src.getWidth());	
+					}
+					else{
+						offset = allUnits.get(i).appliedAddons[a].x;
+						image = allUnits.get(i).appliedAddons[a].src;
+					}
+					g.drawImage(image,(int)allUnits.get(i).x + offset, allUnits.get(i).appliedAddons[a].y + (int)allUnits.get(i).y, (int)((double)allUnits.get(i).width/allUnits.get(i).imgWidth*allUnits.get(i).appliedAddons[a].src.getWidth()),(int)((double)allUnits.get(i).width/allUnits.get(i).imgWidth*allUnits.get(i).appliedAddons[a].src.getHeight()),null);
 				}
+				
 				else{
-					addonOrientation = 1;
-					offset = 0;
-					image = allUnits.get(i).appliedAddons[a].src;
+					if(allUnits.get(i).team == 1){
+						image = op.filter(allUnits.get(i).appliedAddons[a].src, null);
+						offset = Addon.teamSwitch;
+						addonOrientation = -1;			
+					}
+					else{
+						addonOrientation = 1;
+						offset = 0;
+						image = allUnits.get(i).appliedAddons[a].src;
+					}
+					g.drawImage(image,(int)allUnits.get(i).x+ allUnits.get(i).appliedAddons[a].x * addonOrientation  + offset, allUnits.get(i).appliedAddons[a].y + (int)allUnits.get(i).y,null);
 				}
-				g.drawImage(image,(int)allUnits.get(i).x+ allUnits.get(i).appliedAddons[a].x * addonOrientation  + offset, allUnits.get(i).appliedAddons[a].y + (int)allUnits.get(i).y,null);
 			}
 			
 		}

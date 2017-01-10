@@ -15,13 +15,15 @@ public class Addon {
 	public int x;
 	public int y;
 	
+	public boolean isScaled = true;
 	public final static int teamSwitch = -15; //Pixel offset for right side units
 	
-	public Addon(String name, Image src, int x, int y){
+	public Addon(String name, Image src, int x, int y, boolean isScaled){
 		this.name = name;
 		this.src = Registry.toBufferedImage(src);
 		this.x = x;
 		this.y = y;
+		this.isScaled = isScaled;
 		addons.add(this);
 	}
 	
