@@ -1,6 +1,7 @@
 package battleField;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 import entity.Entity;
 
@@ -11,8 +12,10 @@ public class Player {
 	public int health = 50;
 	public double regenEnergy = 1;
 	public int currHealth = health;
-	
+
+	public ArrayList<Entity> allowedUnits = new ArrayList<>();
 	public Color color = Color.BLUE;
+	
 	public int team = 0;
 	
 	public Player(){

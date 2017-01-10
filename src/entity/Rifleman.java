@@ -24,8 +24,8 @@ public class Rifleman extends entity.Entity{
 				new Animation(new Image[]{img5},new int[]{7}));
 		speed = 1;
 		range = 90;
-		width = 35;
-		height = 35;
+		width = 49;
+		height = 49;
 		hitPoints = 30;
 		attack = 15;
 		energyCost = 5;

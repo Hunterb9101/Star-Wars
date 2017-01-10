@@ -57,7 +57,7 @@ public abstract class Entity extends Main implements Cloneable{
 	public entityState state = entityState.WALK;
 	public entityState prevState = entityState.IDLE;
 	
-	Animation idleImg; // When the unit is idle
+	public Animation idleImg; // When the unit is idle
 	Animation walkImg; // When the unit is moving
 	Animation prepImg; // When the unit is preparing to fire
 	Animation fireImg; // When the unit is firing
