@@ -112,7 +112,7 @@ public class Main extends ConstructorClass {
 			player1.regenEnergy();
 			player2.regenEnergy();
 			
-			player2.autoSpawn();
+			//player2.autoSpawn();
 		}
 	}
 
@@ -128,6 +128,10 @@ public class Main extends ConstructorClass {
 	}
 
 	public void keyPressed(KeyEvent evt) {
+		if(evt.getKeyChar() == 'a'){
+			Entity.spawnCluster("Stormtrooper", 750, rand.nextInt(800), 75, 5, player2);
+		}
+	
 	}
 
 	public void keyReleased(KeyEvent evt){

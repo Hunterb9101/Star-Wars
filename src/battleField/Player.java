@@ -1,11 +1,13 @@
-package battleField;
+	package battleField;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Random;
 
 import entity.Entity;
 
 public class Player {
+	public static Random rand = new Random();
 	public String name = "Defacto";
 	public int energy = 500;
 	public int currEnergy = energy;
@@ -42,8 +44,8 @@ public class Player {
 	}
 	
 	public void autoSpawn(){
-		if(Main.rand.nextDouble() < .125){
-			Entity.spawnCluster("Rebel", Main.rand.nextInt(Main.defaultWidth - Main.rightPlayerSpawn) + Main.rightPlayerSpawn, Main.rand.nextInt(Main.defaultHeight), 45, 5, this);
+		if(rand.nextDouble() < .125){
+			Entity.spawnCluster("Rebel", rand.nextInt(Main.defaultWidth - Main.rightPlayerSpawn) + Main.rightPlayerSpawn, rand.nextInt(Main.defaultHeight), 45, 5, this);
 		}
 	}
 }
