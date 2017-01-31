@@ -42,7 +42,6 @@ public abstract class Entity extends Main implements Cloneable{
 	public int width = 24;
 	public int height = 24;
 	
-	
 	private int reloadTime = 500; // Time that is used in Reload State
 	private int attackTime = 300; // Time spent in Fire State
 	private int prepTime = 800;   // Time in Prep State
@@ -91,60 +90,45 @@ public abstract class Entity extends Main implements Cloneable{
 	public static boolean spawnCluster(String entityName, int x, int y, int radius, int n, Player p){
 		int checkX;
 		int checkY;
-		int spawned = 0;
 		
-		if(p.currEnergy < Registry.getNewEntity(entityName).energyCost*n){
+		Entity e = Registry.getNewEntity(entityName);
+		if(p.currEnergy < e.energyCost*n){
 			return false; // don't spawn units if not enough energy //
 		}
 		
 		for(int i = 0; i<n; i++){
 			checkX = ((rand.nextBoolean())? 1:-1) * rand.nextInt(radius) + x;
 			checkY = ((rand.nextBoolean())? 1:-1) * rand.nextInt(radius) + y;
-			boolean passed = false;
 			
-			int passCheck = 25;
-			int currPass = 0;
-			
-			while(!passed && currPass < passCheck ){
-				if(checkX > 0 && checkX < Main.leftPlayerSpawn - radius && p.team == 0){
-					if(checkY > topBorder && checkY < bottomBorder - Registry.getNewEntity(entityName).height){
-						passed = true;
-					}
-					else{
-						checkY = ((rand.nextBoolean())? 1:-1) * rand.nextInt(radius) + y;
-					}
+			if(p.team == 0){
+				if(checkX < 0){
+					checkX = 0;
 				}
-				else{
-					checkX = ((rand.nextBoolean())? 1:-1) * rand.nextInt(radius) + x;
+				else if(checkX > Main.leftPlayerSpawn){
+					checkX = Main.leftPlayerSpawn;
 				}
-				
-				if(checkX < defaultWidth && checkX > Main.rightPlayerSpawn && p.team == 1){
-					if(checkY > topBorder && checkY < bottomBorder - Registry.getNewEntity(entityName).height){
-						passed = true;
-					}
-					else{
-						checkY = ((rand.nextBoolean())? 1:-1) * rand.nextInt(radius) + y;
-					}
+			}
+			else if(p.team == 1){
+				if(checkX > defaultWidth){
+					checkX = defaultWidth;
 				}
-				else{
-					checkX = ((rand.nextBoolean())? 1:-1) * rand.nextInt(radius) + x;
+				else if(checkX < Main.rightPlayerSpawn){
+					checkX = Main.rightPlayerSpawn;
 				}
-				currPass++;
 			}
 			
-			if(passed){
-				Registry.getNewEntity(entityName).spawn(checkX, checkY, p);
-				spawned++;
+			if(checkY < topBorder){
+				checkY = topBorder;
 			}
+			else if(checkY > bottomBorder - e.height){
+				checkY = bottomBorder - e.height;
+			}
+			Registry.getNewEntity(entityName).spawn(checkX, checkY, p);
 		}
 		
-		if(spawned == n){
-			p.currEnergy -= Registry.getNewEntity(entityName).energyCost*n;
-			return true;
-		}
-		else{
-			return false;
-		}
+		p.currEnergy -= e.energyCost*n;
+		
+		return true;
 	}
 	
 	public static void updateUnits(Graphics g){		

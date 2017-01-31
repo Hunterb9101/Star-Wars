@@ -37,6 +37,7 @@ public class Main extends ConstructorClass {
 	
 	public static int bottomBorder = 725;
 	public static int topBorder = 110;
+	
 
 	public void doInitialization(int width, int height) {
 		this.setSize(defaultWidth,defaultHeight);
@@ -112,7 +113,7 @@ public class Main extends ConstructorClass {
 			player1.regenEnergy();
 			player2.regenEnergy();
 			
-			//player2.autoSpawn();
+			player2.autoSpawn();
 		}
 	}
 
