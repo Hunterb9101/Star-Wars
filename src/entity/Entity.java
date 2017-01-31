@@ -61,6 +61,7 @@ public abstract class Entity extends Main implements Cloneable{
 	Animation prepImg; // When the unit is preparing to fire
 	Animation fireImg; // When the unit is firing
 	Animation reloadImg; // When unit is in between rounds
+	public Animation compileImg; // Image to display for spawning
 	
 	Addon[] appliedAddons = new Addon[0];
 	
@@ -68,7 +69,7 @@ public abstract class Entity extends Main implements Cloneable{
 		name = iName;		
 	}
 	
-	public void setImgSources(Animation idle, Animation walk, Animation prep, Animation fire, Animation reload){
+	public void setImgSources(Animation idle, Animation walk, Animation prep, Animation fire, Animation reload, Animation compile){
 		idleImg = idle;
 		
 		imgWidth = idle.frames[0].getWidth(null);
@@ -78,6 +79,7 @@ public abstract class Entity extends Main implements Cloneable{
 		prepImg = prep;
 		fireImg = fire;
 		reloadImg = reload;
+		compileImg = compile;
 	}
 	
 	public void spawn(int iX, int iY, Player p){

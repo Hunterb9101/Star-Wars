@@ -45,7 +45,7 @@ public class Player {
 	
 	public void autoSpawn(){
 		if(rand.nextDouble() < .125){
-			Entity.spawnCluster("Rebel", rand.nextInt(Main.defaultWidth - Main.rightPlayerSpawn) + Main.rightPlayerSpawn, rand.nextInt(Main.defaultHeight), 45, 5, this);
+			Entity.spawnCluster("Rebel", rand.nextInt(Main.defaultWidth - Main.rightPlayerSpawn) + Main.rightPlayerSpawn, rand.nextInt(Main.bottomBorder - Main.topBorder) + Main.topBorder, 45, 5, this);
 		}
 	}
 }

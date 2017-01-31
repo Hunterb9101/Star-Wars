@@ -20,10 +20,11 @@ public class Rebel extends Entity {
 	Animation prepImg = new Animation(new Image[]{Registry.loadImage("rebel/RebelFire.png")}, new int[]{0});
 	Animation fireImg = new Animation(new Image[]{Registry.loadImage("rebel/RebelFire.png")}, new int[]{0});
 	Animation reloadImg = new Animation(new Image[]{Registry.loadImage("rebel/RebelFire.png")}, new int[]{0});
+	Animation compileImg = new Animation(new Image[]{Registry.loadImage("rebel/RebelIdle.png")}, new int[]{0});
 	
 	public Rebel() {
 		super("Rebel");
-		setImgSources(idleImg,walkImg,prepImg,fireImg,reloadImg);
+		setImgSources(idleImg,walkImg,prepImg,fireImg,reloadImg,compileImg);
 		width = 49;
 		height = 49;
 		speed = 2;

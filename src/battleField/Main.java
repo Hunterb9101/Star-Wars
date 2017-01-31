@@ -105,9 +105,9 @@ public class Main extends ConstructorClass {
 		
 		if(!roundFinished){
 			for(int i = 0; i<player1.allowedUnits.size(); i++){
-				g.setColor(Color.red);
+				g.setColor(player1.color);
 				g.fillRect(defaultWidth/10*i + defaultWidth/20,737, 50, 50);
-				g.drawImage(player1.allowedUnits.get(i).idleImg.play(100),defaultWidth/10*i + defaultWidth/20,737, 50, 50, null);
+				g.drawImage(player1.allowedUnits.get(i).compileImg.play(100),defaultWidth/10*i + defaultWidth/20,737, 50, 50, null);
 			}
 			
 			player1.regenEnergy();
@@ -121,7 +121,9 @@ public class Main extends ConstructorClass {
 		super.mousePressed(evt);
 		
 		if(!roundFinished){
-			Entity.spawnCluster("Stormtrooper", evt.getX(), evt.getY(), 75, 5, player1);
+			if(evt.getX() > topBorder && evt.getX() < bottomBorder && (evt.getY() <leftPlayerSpawn) || evt.getY() > rightPlayerSpawn){
+				Entity.spawnCluster("Stormtrooper", evt.getX(), evt.getY(), 75, 5, player1);
+			}
 		}
 		else{
 			// Go to main window //
