@@ -17,6 +17,8 @@ import javax.swing.*;
 
 import entity.Entity;
 import fireworks.explosion.Explosion;
+import gui.Clickable;
+import gui.UnitSpawnButton;
 
 //need for music and sound
 
@@ -51,6 +53,10 @@ public class Main extends ConstructorClass {
 		
 		Registry.registerFireworks();
 		Registry.registerAddons();
+		
+		for(int i = 0; i<player1.allowedUnits.size(); i++){
+			new UnitSpawnButton(defaultWidth/10*i + defaultWidth/20,737, 50, 50,player1.allowedUnits.get(i).compileImg);
+		}
 	} // doInitialization
 
 	// All drawing is done here //
@@ -102,14 +108,9 @@ public class Main extends ConstructorClass {
 		Registry.drawText(g, "Energy: " + String.valueOf(player2.currEnergy) + "/" + String.valueOf(player2.energy), Registry.Alignments.RIGHT,defaultWidth - 5, 50);
 		Registry.drawText(g, "Health: " + String.valueOf(player2.currHealth) + "/" + String.valueOf(player2.health), Registry.Alignments.RIGHT,defaultWidth - 5, 75);	
 	
+		Clickable.update(g);
 		
 		if(!roundFinished){
-			for(int i = 0; i<player1.allowedUnits.size(); i++){
-				g.setColor(player1.color);
-				g.fillRect(defaultWidth/10*i + defaultWidth/20,737, 50, 50);
-				g.drawImage(player1.allowedUnits.get(i).compileImg.play(100),defaultWidth/10*i + defaultWidth/20,737, 50, 50, null);
-			}
-			
 			player1.regenEnergy();
 			player2.regenEnergy();
 			
@@ -119,9 +120,9 @@ public class Main extends ConstructorClass {
 
 	public void mousePressed(MouseEvent evt) {
 		super.mousePressed(evt);
-		
 		if(!roundFinished){
-			if(evt.getX() > topBorder && evt.getX() < bottomBorder && (evt.getY() <leftPlayerSpawn) || evt.getY() > rightPlayerSpawn){
+			Clickable.checkClicks(evt.getX(),evt.getY());
+			if(evt.getY() > topBorder && evt.getY() < bottomBorder && (evt.getX() < leftPlayerSpawn)){
 				Entity.spawnCluster("Stormtrooper", evt.getX(), evt.getY(), 75, 5, player1);
 			}
 		}
