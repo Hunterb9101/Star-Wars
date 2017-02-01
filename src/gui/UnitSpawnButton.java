@@ -11,11 +11,14 @@ public class UnitSpawnButton extends Clickable{
 	static int buttonCount = 0;
 
 	int id = 0;
-	static int idClicked = -1; 
+	public static int idClicked = 0; 
 	
 	public UnitSpawnButton(int x, int y, int width, int height, Animation src){
-		super();
 		this.src = src;
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
 		id = buttonCount;
 		buttonCount++;
 		allElements.add(this);
@@ -32,7 +35,6 @@ public class UnitSpawnButton extends Clickable{
 			g.setColor(Color.GRAY);
 			g.fillRect(x,y,width,height);
 			g.drawImage(src.play(100),x,y,width,height, null);
-			System.out.println("Image");
 		}
 	}
 	

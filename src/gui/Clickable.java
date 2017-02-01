@@ -34,7 +34,6 @@ public abstract class Clickable {
 	public static void update(Graphics g){
 		for(int i = 0; i<allElements.size(); i++){
 			allElements.get(i).draw(g);
-			System.out.println(allElements.size());
 		}
 	}
 }

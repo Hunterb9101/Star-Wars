@@ -123,7 +123,7 @@ public class Main extends ConstructorClass {
 		if(!roundFinished){
 			Clickable.checkClicks(evt.getX(),evt.getY());
 			if(evt.getY() > topBorder && evt.getY() < bottomBorder && (evt.getX() < leftPlayerSpawn)){
-				Entity.spawnCluster("Stormtrooper", evt.getX(), evt.getY(), 75, 5, player1);
+				Entity.spawnCluster(player1.allowedUnits.get(UnitSpawnButton.idClicked).name, evt.getX(), evt.getY(), 75, 5, player1);
 			}
 		}
 		else{
@@ -131,11 +131,7 @@ public class Main extends ConstructorClass {
 		}
 	}
 
-	public void keyPressed(KeyEvent evt) {
-		if(evt.getKeyChar() == 'a'){
-			Entity.spawnCluster("Stormtrooper", 750, rand.nextInt(800), 75, 5, player2);
-		}
-	
+	public void keyPressed(KeyEvent evt) {	
 	}
 
 	public void keyReleased(KeyEvent evt){
