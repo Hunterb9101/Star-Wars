@@ -19,7 +19,7 @@ public class Stormtrooper extends Entity {
 	Animation prepImg = new Animation(new Image[]{Registry.loadImage("stormtrooper/StormtrooperPrep.png")}, new int[]{0});
 	Animation fireImg = new Animation(new Image[]{Registry.loadImage("stormtrooper/StormtrooperFire.png")}, new int[]{0});
 	Animation reloadImg = new Animation(new Image[]{Registry.loadImage("stormtrooper/StormtrooperPrep.png")}, new int[]{0});
-	Animation compileImg = new Animation(new Image[]{Registry.loadImage("stormtrooper/StormtrooperIdle.png")}, new int[]{0});
+	Animation compileImg = new Animation(new Image[]{Registry.loadImage("stormtrooper/StormtrooperCompile.png")}, new int[]{0});
 	public Stormtrooper() {
 		super("Stormtrooper");
 		setImgSources(idleImg,walkImg,prepImg,fireImg,reloadImg,compileImg);
