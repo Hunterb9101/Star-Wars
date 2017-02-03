@@ -26,7 +26,6 @@ public class UnitSpawnButton extends Clickable{
 	
 	public void draw(Graphics g){
 		if(id == idClicked){
-			System.out.println("In loop");
 			g.setColor(Color.BLUE);
 			g.fillRect(x,y,width,height);
 			g.drawImage(src.play(100),x,y,width,height, null);

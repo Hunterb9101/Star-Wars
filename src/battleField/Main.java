@@ -31,7 +31,6 @@ public class Main extends ConstructorClass {
 	public static boolean roundFinished = false;
 	public static int teamWon = -1;
 	
-	public static boolean disableControls = false;
 	public static int defaultWidth = 800;
 	public static int defaultHeight = 800;
 	
