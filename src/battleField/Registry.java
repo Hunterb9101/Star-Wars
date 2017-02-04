@@ -12,9 +12,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import entity.*;
-import entity.imperial.MagmaTrooper;
-import entity.imperial.SandTrooper;
-import entity.imperial.Stormtrooper;
+import entity.imperial.*;
 import fireworks.explosion.*;
 import fireworks.particleCommons.*;
 
@@ -26,9 +24,14 @@ public class Registry {
 	public static Entity getNewEntity(String entityName){
 		switch(entityName){
 		case "Rifleman": return new Rifleman();
+		
 		case "Stormtrooper": return new Stormtrooper();
 		case "MagmaTrooper": return new MagmaTrooper();
 		case "SandTrooper": return new SandTrooper();
+		case "Shoretrooper": return new Shoretrooper();
+		case "StormtrooperCaptain": return new StormtrooperCaptain();
+		case "Shocktrooper": return new Shocktrooper();
+		
 		case "Rebel": return new Rebel();
 		default: System.out.println("Oh No! Entity not found:" + entityName + "!");return new Rifleman();
 		}

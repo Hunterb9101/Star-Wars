@@ -41,7 +41,7 @@ public class Main extends ConstructorClass {
 	public static int topBorder = 110;
 	
 	public static enum PlanetTypes{TROPICAL,MAGMA,DESERT,COLD,OTHER};
-	public static PlanetTypes planet = PlanetTypes.MAGMA;
+	public static PlanetTypes planet = PlanetTypes.TROPICAL;
 
 	public void doInitialization(int width, int height) {
 		this.setSize(defaultWidth,defaultHeight);
@@ -53,7 +53,9 @@ public class Main extends ConstructorClass {
 		player1.allowedUnits.add(Registry.getNewEntity("Stormtrooper"));
 		player1.allowedUnits.add(Registry.getNewEntity("MagmaTrooper"));
 		player1.allowedUnits.add(Registry.getNewEntity("SandTrooper"));
-		player1.allowedUnits.add(Registry.getNewEntity("Rebel"));
+		player1.allowedUnits.add(Registry.getNewEntity("Shoretrooper"));
+		player1.allowedUnits.add(Registry.getNewEntity("StormtrooperCaptain"));
+		player1.allowedUnits.add(Registry.getNewEntity("Shocktrooper"));
 		
 		Registry.registerFireworks();
 		Registry.registerAddons();

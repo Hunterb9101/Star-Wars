@@ -9,6 +9,7 @@ import entity.Animation;
 public class UnitSpawnButton extends Clickable{
 	
 	Animation src;
+	int srcXOffset = 20;
 	Image bg;
 	static int buttonCount = 0;
 
@@ -32,13 +33,13 @@ public class UnitSpawnButton extends Clickable{
 			g.setColor(Color.BLUE);
 			g.fillRect(x - 5,y - 5,width + 10,height + 10);
 			g.drawImage(bg, x - 5, y - 5, width + 10, height + 10,null);
-			g.drawImage(src.play(100),x,y,width,height, null);
+			g.drawImage(src.play(100),x + srcXOffset,y,width,height, null);
 		}
 		else{
 			g.setColor(Color.GRAY);
 			g.fillRect(x - 5,y - 5,width + 10,height + 10);
 			g.drawImage(bg, x - 5, y - 5, width + 10, height + 10,null);
-			g.drawImage(src.play(100),x,y,width,height, null);
+			g.drawImage(src.play(100),x + srcXOffset,y,width,height, null);
 	
 		}
 	}

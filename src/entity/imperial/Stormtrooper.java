@@ -45,5 +45,4 @@ public class Stormtrooper extends Entity {
 			appliedAddons = new Addon[]{Addon.findByName("Pauldron_Blue"),Addon.findByName("Backpack")};
 		}
 	}
-
 }
