@@ -29,8 +29,8 @@ public class Rebel extends Entity {
 		height = 49;
 		speed = 2;
 		range = 120;
-		hitPoints = 30;
-		attack = 30;
+		hitPoints = 100;
+		attack = 25;
 		energyCost = 5;
 	}
 	

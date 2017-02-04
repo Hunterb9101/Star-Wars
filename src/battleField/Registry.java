@@ -12,6 +12,9 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
 import entity.*;
+import entity.imperial.MagmaTrooper;
+import entity.imperial.SandTrooper;
+import entity.imperial.Stormtrooper;
 import fireworks.explosion.*;
 import fireworks.particleCommons.*;
 
@@ -24,6 +27,8 @@ public class Registry {
 		switch(entityName){
 		case "Rifleman": return new Rifleman();
 		case "Stormtrooper": return new Stormtrooper();
+		case "MagmaTrooper": return new MagmaTrooper();
+		case "SandTrooper": return new SandTrooper();
 		case "Rebel": return new Rebel();
 		default: System.out.println("Oh No! Entity not found:" + entityName + "!");return new Rifleman();
 		}
@@ -44,9 +49,13 @@ public class Registry {
 		} 
 		return img;
 	}
+	
 	public static void registerAddons(){
 		new Addon("Pauldron_Red",loadImage("stormtrooper/addons/Pauldron_Red.png"),1,14,false);
 		new Addon("Pauldron_Blue",loadImage("stormtrooper/addons/Pauldron_Blue.png"),1,14,false);
+		new Addon("Pauldron_Orange",loadImage("stormtrooper/addons/Pauldron_Orange.png"),1,14,false);
+		new Addon("Pauldron_Black",loadImage("stormtrooper/addons/Pauldron_Black.png"),1,14,false);
+		new Addon("Pauldron_White",loadImage("stormtrooper/addons/Pauldron_White.png"),1,14,false);
 		new Addon("Backpack",loadImage("stormtrooper/addons/Backpack.png"),-4,12,false);
 		
 		new Addon("Head1",loadImage("rebel/addons/Rebel_Head1.png"),7,4,true);

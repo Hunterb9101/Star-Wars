@@ -40,6 +40,8 @@ public class Main extends ConstructorClass {
 	public static int bottomBorder = 725;
 	public static int topBorder = 110;
 	
+	public static enum PlanetTypes{TROPICAL,MAGMA,DESERT,COLD,OTHER};
+	public static PlanetTypes planet = PlanetTypes.MAGMA;
 
 	public void doInitialization(int width, int height) {
 		this.setSize(defaultWidth,defaultHeight);
@@ -49,13 +51,15 @@ public class Main extends ConstructorClass {
 		player2.color = Color.RED;
 		
 		player1.allowedUnits.add(Registry.getNewEntity("Stormtrooper"));
+		player1.allowedUnits.add(Registry.getNewEntity("MagmaTrooper"));
+		player1.allowedUnits.add(Registry.getNewEntity("SandTrooper"));
 		player1.allowedUnits.add(Registry.getNewEntity("Rebel"));
 		
 		Registry.registerFireworks();
 		Registry.registerAddons();
 		
 		for(int i = 0; i<player1.allowedUnits.size(); i++){
-			new UnitSpawnButton(defaultWidth/10*i + defaultWidth/20,737, 50, 50,player1.allowedUnits.get(i).compileImg);
+			new UnitSpawnButton(defaultWidth/10*i + defaultWidth/20,737, 50, 50,player1.allowedUnits.get(i).compileImg,player1.allowedUnits.get(i).buttonImg);
 		}
 	} // doInitialization
 

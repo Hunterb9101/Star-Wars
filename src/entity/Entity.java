@@ -42,7 +42,7 @@ public abstract class Entity extends Main implements Cloneable{
 	public int width = 24;
 	public int height = 24;
 	
-	private int reloadTime = 500; // Time that is used in Reload State
+	private int reloadTime = 250; // Time that is used in Reload State
 	private int attackTime = 300; // Time spent in Fire State
 	private int prepTime = 800;   // Time in Prep State
 	
@@ -61,9 +61,10 @@ public abstract class Entity extends Main implements Cloneable{
 	Animation prepImg; // When the unit is preparing to fire
 	Animation fireImg; // When the unit is firing
 	Animation reloadImg; // When unit is in between rounds
-	public Animation compileImg; // Image to display for spawning
+	public Animation compileImg; // Image to display for spawning	
+	public Image buttonImg = Registry.loadImage("button/buttonOther.png");
 	
-	Addon[] appliedAddons = new Addon[0];
+	protected Addon[] appliedAddons = new Addon[0];
 	
 	public Entity(String iName){
 		name = iName;		

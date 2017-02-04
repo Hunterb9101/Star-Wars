@@ -1,9 +1,12 @@
-package entity;
+package entity.imperial;
 
 import java.awt.Image;
 
 import battleField.Player;
 import battleField.Registry;
+import entity.Addon;
+import entity.Animation;
+import entity.Entity;
 
 public class Stormtrooper extends Entity {
 	Animation idleImg = new Animation(new Image[]{Registry.loadImage("stormtrooper/StormtrooperIdle.png")}, new int[]{0});
@@ -27,8 +30,8 @@ public class Stormtrooper extends Entity {
 		height = 49;
 		speed = 2;
 		range = 120;
-		hitPoints = 30;
-		attack = 30;
+		hitPoints = 100;
+		attack = 25;
 		energyCost = 5;
 	}
 	
