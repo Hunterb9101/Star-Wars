@@ -38,11 +38,13 @@ public class Stormtrooper extends Entity {
 	public void spawn(int iX,int iY, Player p){
 		super.spawn(iX, iY, p);
 		
+		/*
 		if(rand.nextBoolean() && team == 1){
 			appliedAddons = new Addon[]{Addon.findByName("Pauldron_Red"),Addon.findByName("Backpack")};
 		}
 		else if(rand.nextBoolean() && team == 0){
 			appliedAddons = new Addon[]{Addon.findByName("Pauldron_Blue"),Addon.findByName("Backpack")};
 		}
+		*/
 	}
 }

@@ -8,6 +8,7 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.WritableRaster;
 import java.io.File;
 import java.net.URL;
 import java.util.Random;
@@ -42,7 +43,10 @@ public class Main extends ConstructorClass {
 	
 	public static enum PlanetTypes{TROPICAL,MAGMA,DESERT,COLD,OTHER};
 	public static PlanetTypes planet = PlanetTypes.TROPICAL;
-
+	
+	public static Image bg; // 800x615
+	public static Image splash; // Dimensions 800x115
+	
 	public void doInitialization(int width, int height) {
 		this.setSize(defaultWidth,defaultHeight);
 		player2.team = 1;
@@ -60,6 +64,17 @@ public class Main extends ConstructorClass {
 		Registry.registerFireworks();
 		Registry.registerAddons();
 		
+		switch(planet){
+		case MAGMA: 
+			bg = Registry.loadImage("background/MagmaPlanetaryBg.png");
+			splash = Registry.loadImage("background/MagmaPlanetarySplash.png"); break;
+		case OTHER: 
+			bg = Registry.loadImage("background/OtherPlanetaryBg.png");
+			splash = Registry.loadImage("background/OtherPlanetarySplash.png");break;
+		default: 
+			bg = Registry.loadImage("background/OtherPlanetaryBg.png"); 
+			splash = Registry.loadImage("background/OtherPlanetarySplash.png");break;
+		}
 		for(int i = 0; i<player1.allowedUnits.size(); i++){
 			new UnitSpawnButton(defaultWidth/10*i + defaultWidth/20,737, 50, 50,player1.allowedUnits.get(i).compileImg,player1.allowedUnits.get(i).buttonImg);
 		}
@@ -68,17 +83,14 @@ public class Main extends ConstructorClass {
 	// All drawing is done here //
 	synchronized public void drawFrame(Graphics g, int width, int height) {
 		this.setSize(defaultWidth,defaultHeight);
-		g.setColor(Color.GRAY);
-		g.fillRect(0, 0, defaultWidth, defaultHeight);
 		
-		g.setColor(player1.color);
-		g.fillRect(0, 0, leftPlayerSpawn, defaultHeight);
+		g.drawImage(splash, 0, 0, null);
+		g.drawImage(bg, 0, topBorder, null);
 		
-		g.setColor(player2.color);
-		g.fillRect(rightPlayerSpawn, 0, defaultHeight-rightPlayerSpawn, defaultHeight);
+		g.drawImage(colorImage(Registry.toBufferedImage(Registry.loadImage("Border.png")),player1.color),0,topBorder,null);
+		g.drawImage(colorImage(Registry.toBufferedImage(Registry.loadImage("Border.png")),player2.color),rightPlayerSpawn,topBorder,null);
 		
 		g.setColor(Color.BLACK);
-		g.fillRect(0, 0, defaultWidth, topBorder);
 		g.fillRect(0, bottomBorder, defaultWidth, defaultHeight-bottomBorder);
 		
 		if(!roundFinished){
@@ -142,6 +154,23 @@ public class Main extends ConstructorClass {
 
 	public void keyReleased(KeyEvent evt){
 	}
+	
+	private static BufferedImage colorImage(BufferedImage image, Color color) {
+	    int width = image.getWidth();
+	    int height = image.getHeight();
+	    WritableRaster raster = image.getRaster();
+
+	    for (int xx = 0; xx < width; xx++) {
+	      for (int yy = 0; yy < height; yy++) {
+	        int[] pixels = raster.getPixel(xx, yy, (int[]) null);
+	        pixels[0] = color.getRed();
+	        pixels[1] = color.getGreen();
+	        pixels[2] = color.getBlue();
+	        raster.setPixel(xx, yy, pixels);
+	      }
+	    }
+	    return image;
+	  }
 }
 
 
