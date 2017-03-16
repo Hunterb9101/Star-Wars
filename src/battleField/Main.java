@@ -83,7 +83,11 @@ public class Main extends ConstructorClass {
 	// All drawing is done here //
 	synchronized public void drawFrame(Graphics g, int width, int height) {
 		this.setSize(defaultWidth,defaultHeight);
+		g.setColor(Color.BLACK);
+		g.fillRect(0, bottomBorder, defaultWidth, defaultHeight-bottomBorder);
 		
+		
+		/*
 		g.drawImage(splash, 0, 0, null);
 		g.drawImage(bg, 0, topBorder, null);
 		
@@ -134,6 +138,7 @@ public class Main extends ConstructorClass {
 			
 			player2.autoSpawn();
 		}
+		*/
 	}
 
 	public void mousePressed(MouseEvent evt) {
