@@ -21,6 +21,7 @@ import fireworks.explosion.Explosion;
 import gui.Clickable;
 import gui.ConstructorClass;
 import gui.UnitSpawnButton;
+import planets.Icosphere;
 
 //need for music and sound
 
@@ -85,8 +86,9 @@ public class Main extends ConstructorClass {
 		this.setSize(defaultWidth,defaultHeight);
 		g.setColor(Color.BLACK);
 		g.fillRect(0, bottomBorder, defaultWidth, defaultHeight-bottomBorder);
-		
-		
+		Icosphere s = new Icosphere();
+		s.create(1);
+		s.draw(g, height);
 		/*
 		g.drawImage(splash, 0, 0, null);
 		g.drawImage(bg, 0, topBorder, null);
