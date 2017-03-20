@@ -87,7 +87,7 @@ public class Main extends ConstructorClass {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, bottomBorder, defaultWidth, defaultHeight-bottomBorder);
 		Icosphere s = new Icosphere();
-		s.create(1);
+		s.create(5);
 		s.draw(g, 256);
 		/*
 		g.drawImage(splash, 0, 0, null);

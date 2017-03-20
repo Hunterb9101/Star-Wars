@@ -60,21 +60,21 @@ public class Icosphere extends Object3D{
         
         for (int i = 0; i < recursionLevel; i++) {
         	ArrayList<Face2D> faces2 = new ArrayList<Face2D>();
-          for(int f = 0; f<faces.size(); f++){
-              // replace triangle by 4 triangles
-              Point3D a = createMiddlePoint(faces.get(i).vertices[0], faces.get(i).vertices[1]);
-              Point3D b = createMiddlePoint(faces.get(i).vertices[1], faces.get(i).vertices[2]);
-              Point3D c = createMiddlePoint(faces.get(i).vertices[2], faces.get(i).vertices[0]);
+        	for(int f = 0; f<faces.size(); f++){
+        		// replace triangle by 4 triangles
+        		Point3D a = createMiddlePoint(faces.get(f).vertices[0], faces.get(f).vertices[1]);
+        		Point3D b = createMiddlePoint(faces.get(f).vertices[1], faces.get(f).vertices[2]);
+        		Point3D c = createMiddlePoint(faces.get(f).vertices[2], faces.get(f).vertices[0]);
 
-              faces2.add(new Triangle(faces.get(i).vertices[0], a, c));
-              faces2.add(new Triangle(faces.get(i).vertices[1], b, a));
-              faces2.add(new Triangle(faces.get(i).vertices[2], c, b));
-              faces2.add(new Triangle(a, b, c));
-              faces.remove(f);
-              f--;
-          }
+        		faces2.add(new Triangle(faces.get(f).vertices[0], a, c));
+        		faces2.add(new Triangle(faces.get(f).vertices[1], b, a));
+        		faces2.add(new Triangle(faces.get(f).vertices[2], c, b));
+        		faces2.add(new Triangle(a, b, c));
+        		faces.remove(f);
+        		f--;
+        	}
           faces.addAll(faces2);
-          System.out.println(faces.size());
+          System.out.println("Recursion " + (i+1) + ":" + faces.size());
         }
     }
     
@@ -86,9 +86,10 @@ public class Icosphere extends Object3D{
             (int)((p1.z + p2.z) / 2.0));
 
         // add vertex makes sure point is on unit sphere
-        double magnitude = Math.sqrt(Math.pow(middle.x-x,2)+Math.pow(middle.y-y,2)+Math.pow(middle.z,2));
-        System.out.println(magnitude);
-        middle = new Point3D((int)((double)middle.x *size*3/2/(double)magnitude), (int)((double)middle.y*size*3/2/(double)magnitude), (int)((double)middle.z*size*3/2/(double)magnitude));
+        double magnitude = Math.sqrt(Math.pow(x-middle.x,2)+Math.pow(y-middle.y,2)+Math.pow(middle.z,2));
+        //System.out.println(magnitude);
+        middle = new Point3D((int)middle.x,(int)middle.y,(int)middle.z);
+        //middle = new Point3D((int)((double)middle.x *size/(double)magnitude), (int)((double)middle.y/(double)magnitude), (int)((double)middle.z/(double)magnitude));
         //middle = new Point3D((int)((middle.x + x)*size/magnitude),(int)((middle.y+y)*size/magnitude),(int)((middle.z+70000)*size/magnitude));
         //vertices.add(middle); 
         return middle;
