@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class Icosphere extends Object3D{
 	public ArrayList<Point3D> vertices = new ArrayList<Point3D>();
-	int size = 50;
+	int size = 100;
 	int x = 300;
 	int y = 300;
     public void create(int recursionLevel) {
@@ -70,6 +70,8 @@ public class Icosphere extends Object3D{
               faces2.add(new Triangle(faces.get(i).vertices[1], b, a));
               faces2.add(new Triangle(faces.get(i).vertices[2], c, b));
               faces2.add(new Triangle(a, b, c));
+              faces.remove(f);
+              f--;
           }
           faces.addAll(faces2);
           System.out.println(faces.size());
@@ -84,9 +86,11 @@ public class Icosphere extends Object3D{
             (int)((p1.z + p2.z) / 2.0));
 
         // add vertex makes sure point is on unit sphere
-        double length = Math.sqrt(Math.pow(middle.x,2)+Math.pow(middle.y,2)+Math.pow(middle.z,2));
-        middle = new Point3D((int)(size*(double)middle.x/(double)length)+x, (int)(size*(double)middle.y/(double)length) + y, (int)(size*(double)middle.z/(double)length));
-        vertices.add(middle); 
+        double magnitude = Math.sqrt(Math.pow(middle.x-x,2)+Math.pow(middle.y-y,2)+Math.pow(middle.z,2));
+        System.out.println(magnitude);
+        middle = new Point3D((int)((double)middle.x *size*3/2/(double)magnitude), (int)((double)middle.y*size*3/2/(double)magnitude), (int)((double)middle.z*size*3/2/(double)magnitude));
+        //middle = new Point3D((int)((middle.x + x)*size/magnitude),(int)((middle.y+y)*size/magnitude),(int)((middle.z+70000)*size/magnitude));
+        //vertices.add(middle); 
         return middle;
     }
 }
