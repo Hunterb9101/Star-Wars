@@ -15,10 +15,10 @@ public class Triangle extends Face2D{
 	
 	public void draw(Graphics g, int shaderSize){
 		g.setColor(Color.BLACK);
-		g.drawPolygon(xVals,yVals,3);
-		double shader = (double)(vertices[0].z + vertices[1].z + vertices[2].z)/(3*shaderSize) + 1;
-		//g.setColor(new Color((int)(128 * shader) ,(int)(128 * shader) ,(int)(128 * shader)));
-		g.setColor(new Color(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255)));
+		//g.drawPolygon(xVals,yVals,3);
+		double shader = Math.pow((double)(vertices[0].z + vertices[1].z + vertices[2].z)/(3*shaderSize),.8) + .5;
+		g.setColor(new Color((int)(96 * shader) ,(int)(96* shader) ,(int)(96 * shader)));
+		//g.setColor(new Color(rand.nextInt(255),rand.nextInt(255),rand.nextInt(255)));
 		g.fillPolygon(xVals,yVals,3);
 	}
 }

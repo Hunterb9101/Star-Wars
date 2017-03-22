@@ -6,27 +6,27 @@ import java.util.ArrayList;
 
 public class Icosphere extends Object3D{
 	public ArrayList<Point3D> vertices = new ArrayList<Point3D>();
-	int size = 100;
-	int x = 300;
-	int y = 300;
+	public int size = 100;
+	public int centerX = 300;
+	public int centerY = 300;
     public void create(int recursionLevel) {
 
-        int t = (int) (size*(1.0 + Math.sqrt(5.0)) / 2.0);
+        int t = (int) (size*2/3 * (1.0 + Math.sqrt(5.0)) / 2.0);
         
-        vertices.add(new Point3D(-size + x,  t + y,  0));
-        vertices.add(new Point3D( size + x,  t + y,  0));
-        vertices.add(new Point3D(-size + x, -t + y,  0));
-        vertices.add(new Point3D( size + x, -t + y,  0));
+        vertices.add(new Point3D((-size*2/3 + centerX),  t + centerY,  0));
+        vertices.add(new Point3D( size*2/3 + centerX,  t + centerY,  0));
+        vertices.add(new Point3D(-size*2/3 + centerX, -t + centerY,  0));
+        vertices.add(new Point3D( size*2/3 + centerX, -t + centerY,  0));
 
-        vertices.add(new Point3D( x, -size + y,  t));
-        vertices.add(new Point3D( x,  size + y,  t));
-        vertices.add(new Point3D( x, -size + y, -t));
-        vertices.add(new Point3D( x,  size + y, -t));
+        vertices.add(new Point3D( centerX, -size*2/3 + centerY,  t));
+        vertices.add(new Point3D( centerX,  size*2/3 + centerY,  t));
+        vertices.add(new Point3D( centerX, -size*2/3 + centerY, -t));
+        vertices.add(new Point3D( centerX,  size*2/3 + centerY, -t));
 
-        vertices.add(new Point3D( t + x,  y, -size));
-        vertices.add(new Point3D( t + x,  y,  size));
-        vertices.add(new Point3D(-t + x,  y, -size));
-        vertices.add(new Point3D(-t + x,  y,  size));
+        vertices.add(new Point3D( t + centerX,  centerY, -size));
+        vertices.add(new Point3D( t + centerX,  centerY,  size));
+        vertices.add(new Point3D(-t + centerX,  centerY, -size));
+        vertices.add(new Point3D(-t + centerX,  centerY,  size));
 
 
 
@@ -61,7 +61,6 @@ public class Icosphere extends Object3D{
         for (int i = 0; i < recursionLevel; i++) {
         	ArrayList<Face2D> faces2 = new ArrayList<Face2D>();
         	for(int f = 0; f<faces.size(); f++){
-        		// replace triangle by 4 triangles
         		Point3D a = createMiddlePoint(faces.get(f).vertices[0], faces.get(f).vertices[1]);
         		Point3D b = createMiddlePoint(faces.get(f).vertices[1], faces.get(f).vertices[2]);
         		Point3D c = createMiddlePoint(faces.get(f).vertices[2], faces.get(f).vertices[0]);
@@ -73,8 +72,8 @@ public class Icosphere extends Object3D{
         		faces.remove(f);
         		f--;
         	}
+        	//System.out.println("Recursion Level: " + i + ", Faces:" + faces2.size() );
           faces.addAll(faces2);
-          System.out.println("Recursion " + (i+1) + ":" + faces.size());
         }
     }
     
@@ -84,14 +83,13 @@ public class Icosphere extends Object3D{
             (int)((p1.x + p2.x) / 2.0), 
             (int)((p1.y + p2.y) / 2.0), 
             (int)((p1.z + p2.z) / 2.0));
-
-        // add vertex makes sure point is on unit sphere
-        double magnitude = Math.sqrt(Math.pow(x-middle.x,2)+Math.pow(y-middle.y,2)+Math.pow(middle.z,2));
-        //System.out.println(magnitude);
-        middle = new Point3D((int)middle.x,(int)middle.y,(int)middle.z);
-        //middle = new Point3D((int)((double)middle.x *size/(double)magnitude), (int)((double)middle.y/(double)magnitude), (int)((double)middle.z/(double)magnitude));
-        //middle = new Point3D((int)((middle.x + x)*size/magnitude),(int)((middle.y+y)*size/magnitude),(int)((middle.z+70000)*size/magnitude));
-        //vertices.add(middle); 
+        middle.x -= centerX;
+        middle.y -= centerY;
+        // add vertex makes sure point is on unit sphere (Problem lies in these two statements)
+        double magnitude = Math.sqrt(Math.pow(middle.x,2)+Math.pow(middle.y,2)+Math.pow(middle.z,2));
+        double radius = (size*(1.0 + Math.sqrt(5.0)))/2;
+        middle = new Point3D((int)((double)(middle.x)*radius/(double)magnitude) + centerX, (int)((double)(middle.y)*radius/(double)magnitude) + centerY, (int)((double)middle.z*radius/(double)magnitude));
+        
         return middle;
     }
 }
