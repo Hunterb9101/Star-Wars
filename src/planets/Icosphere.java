@@ -9,8 +9,10 @@ public class Icosphere extends Object3D{
 	public int size = 100;
 	public int centerX = 300;
 	public int centerY = 300;
+	public long startTime = System.currentTimeMillis();
+	private double radius = -1;
+	
     public void create(int recursionLevel) {
-
         int t = (int) (size*2/3 * (1.0 + Math.sqrt(5.0)) / 2.0);
         
         vertices.add(new Point3D((-size*2/3 + centerX),  t + centerY,  0));
@@ -58,38 +60,39 @@ public class Icosphere extends Object3D{
         faces.add(new Triangle(vertices.get(8), vertices.get(6), vertices.get(7)));
         faces.add(new Triangle(vertices.get(9), vertices.get(8), vertices.get(1))); 
         
+        Point3D a;
+        Point3D b;
+        Point3D c;
         for (int i = 0; i < recursionLevel; i++) {
         	ArrayList<Face2D> faces2 = new ArrayList<Face2D>();
-        	for(int f = 0; f<faces.size(); f++){
-        		Point3D a = createMiddlePoint(faces.get(f).vertices[0], faces.get(f).vertices[1]);
-        		Point3D b = createMiddlePoint(faces.get(f).vertices[1], faces.get(f).vertices[2]);
-        		Point3D c = createMiddlePoint(faces.get(f).vertices[2], faces.get(f).vertices[0]);
+        	while(faces.size() != 0){
+        		a = createMiddlePoint(faces.get(0).vertices[0], faces.get(0).vertices[1]);
+        		b = createMiddlePoint(faces.get(0).vertices[1], faces.get(0).vertices[2]);
+        		c = createMiddlePoint(faces.get(0).vertices[2], faces.get(0).vertices[0]);
 
-        		faces2.add(new Triangle(faces.get(f).vertices[0], a, c));
-        		faces2.add(new Triangle(faces.get(f).vertices[1], b, a));
-        		faces2.add(new Triangle(faces.get(f).vertices[2], c, b));
+        		faces2.add(new Triangle(faces.get(0).vertices[0], a, c));
+        		faces2.add(new Triangle(faces.get(0).vertices[1], b, a));
+        		faces2.add(new Triangle(faces.get(0).vertices[2], c, b));
         		faces2.add(new Triangle(a, b, c));
-        		faces.remove(f);
-        		f--;
+        		faces.remove(0);
         	}
-        	//System.out.println("Recursion Level: " + i + ", Faces:" + faces2.size() );
-          faces.addAll(faces2);
+          //System.out.println("Recursion Level: " + i + ", Faces:" + faces2.size());
+          System.out.println("" + (System.currentTimeMillis() - startTime));
+          faces = faces2;
         }
     }
     
     private Point3D createMiddlePoint(Point3D p1, Point3D p2){
-        // not in cache, calculate it
         Point3D middle = new Point3D(
-            (int)((p1.x + p2.x) / 2.0), 
-            (int)((p1.y + p2.y) / 2.0), 
+            (int)((p1.x + p2.x) / 2.0 - centerX), 
+            (int)((p1.y + p2.y) / 2.0 - centerY), 
             (int)((p1.z + p2.z) / 2.0));
-        middle.x -= centerX;
-        middle.y -= centerY;
+        if(radius == -1){
+        	radius = (size*(1.0 + Math.sqrt(5.0)))/2;
+        }
         // add vertex makes sure point is on unit sphere (Problem lies in these two statements)
         double magnitude = Math.sqrt(Math.pow(middle.x,2)+Math.pow(middle.y,2)+Math.pow(middle.z,2));
-        double radius = (size*(1.0 + Math.sqrt(5.0)))/2;
-        middle = new Point3D((int)((double)(middle.x)*radius/(double)magnitude) + centerX, (int)((double)(middle.y)*radius/(double)magnitude) + centerY, (int)((double)middle.z*radius/(double)magnitude));
         
-        return middle;
+        return new Point3D((int)((middle.x)*radius/magnitude) + centerX, (int)((middle.y)*radius/magnitude) + centerY, (int)(middle.z*radius/magnitude));
     }
 }
