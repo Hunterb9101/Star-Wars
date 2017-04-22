@@ -89,6 +89,7 @@ public class Main extends ConstructorClass {
 		g.fillRect(0, 0, defaultWidth, defaultHeight);
 		Planet s = new Planet();
 		s.createMesh(6);
+
 		
 		s.draw(g);
 		g.setColor(Color.BLACK);
