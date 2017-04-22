@@ -6,8 +6,7 @@ import java.util.Collections;
 
 abstract class Object3D {
 	public ArrayList<Face2D> faces = new ArrayList<Face2D>();
-	
-	public void draw(Graphics g, int shaderSize){
+	public void draw(Graphics g){
 		ArrayList<Integer> uniqueZAverages = new ArrayList<Integer>();
 		for(int i = 0; i<faces.size(); i++){
 			if(uniqueZAverages.indexOf(faces.get(i).getZAverage()) == -1){
@@ -19,7 +18,7 @@ abstract class Object3D {
 		for(int z = 0; z<uniqueZAverages.size(); z++){
 			for(int i = 0; i<faces.size(); i++){
 				if(uniqueZAverages.get(z) == faces.get(i).getZAverage()){
-					faces.get(i).draw(g, shaderSize);
+					faces.get(i).draw(g, 256);
 				}
 			}
 		}
