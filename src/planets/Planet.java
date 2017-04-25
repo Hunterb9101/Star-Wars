@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class Planet extends Object3D{
 	public ArrayList<Point3D> vertices = new ArrayList<Point3D>();
 	public int size = 100;
+	public double radius = -1;
 	public int centerX = 300;
 	public int centerY = 300;
 	
@@ -68,24 +69,14 @@ public class Planet extends Object3D{
         		a = createMiddlePoint(faces.get(0).vertices[0], faces.get(0).vertices[1]);
         		b = createMiddlePoint(faces.get(0).vertices[1], faces.get(0).vertices[2]);
         		c = createMiddlePoint(faces.get(0).vertices[2], faces.get(0).vertices[0]);
-
-<<<<<<< HEAD:src/planets/Planet.java
-        		faces2.add(new PlanetTile(faces.get(f).vertices[0], a, c));
-        		faces2.add(new PlanetTile(faces.get(f).vertices[1], b, a));
-        		faces2.add(new PlanetTile(faces.get(f).vertices[2], c, b));
+        		
+        		faces2.add(new PlanetTile(faces.get(0).vertices[0], a, c));
+        		faces2.add(new PlanetTile(faces.get(0).vertices[1], b, a));
+        		faces2.add(new PlanetTile(faces.get(0).vertices[2], c, b));
         		faces2.add(new PlanetTile(a, b, c));
-        		faces.remove(f);
-        		f--;
-=======
-        		faces2.add(new Triangle(faces.get(0).vertices[0], a, c));
-        		faces2.add(new Triangle(faces.get(0).vertices[1], b, a));
-        		faces2.add(new Triangle(faces.get(0).vertices[2], c, b));
-        		faces2.add(new Triangle(a, b, c));
         		faces.remove(0);
->>>>>>> origin/master:src/planets/Icosphere.java
         	}
           //System.out.println("Recursion Level: " + i + ", Faces:" + faces2.size());
-          System.out.println("" + (System.currentTimeMillis() - startTime));
           faces = faces2;
         }
     }
