@@ -21,7 +21,6 @@ import fireworks.explosion.Explosion;
 import gui.Clickable;
 import gui.ConstructorClass;
 import gui.UnitSpawnButton;
-import planets.Planet;
 
 //need for music and sound
 
@@ -87,15 +86,9 @@ public class Main extends ConstructorClass {
 		
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, defaultWidth, defaultHeight);
-		Planet s = new Planet();
-		s.createMesh(6);
-
-		
-		s.draw(g);
-		g.setColor(Color.BLACK);
 		
 		
-		/*
+		
 		g.drawImage(splash, 0, 0, null);
 		g.drawImage(bg, 0, topBorder, null);
 		
@@ -146,7 +139,6 @@ public class Main extends ConstructorClass {
 			
 			player2.autoSpawn();
 		}
-		*/
 	}
 
 	public void mousePressed(MouseEvent evt) {
